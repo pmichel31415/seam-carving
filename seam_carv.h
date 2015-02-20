@@ -33,9 +33,15 @@ public:
         n=N;
     }
     
-    T operator()(int i, int j) const{ return (*this)[i+m*j];}
+    T operator()(int i, int j) const{ return (*this)[i+m*j];} //pour les methodes utilisant des const
     T& operator()(int i, int j) {return (*this)[i+m*j];}
-    
+
+    int width(){
+        return m;
+    }
+    int height(){
+        return n;
+    }
 };
 
 Mat toGrad(const Mat& I);
