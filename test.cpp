@@ -1,3 +1,4 @@
+#include <iostream>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/features2d/features2d.hpp>
 #include <opencv2/nonfree/features2d.hpp>
@@ -5,5 +6,5 @@
 
 int main()
 {
-	cout << test<<endl;
+	std::cout << "test" << std::endl;
 }
