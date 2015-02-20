@@ -11,35 +11,47 @@ using namespace std;
 const int alpha_slider_max = 100;
 int alpha_slider;
 double alpha;
-double beta;
+double nwidth;
 
 /// Matrices to store images
-Mat src1;
-Mat src2;
+Mat src;
 Mat dst;
 
 /**
 * @function on_trackbar
 * @brief Callback for trackbar
 */
+
 void on_trackbar(int, void*)
 {
 	alpha = (double)alpha_slider / alpha_slider_max;
-	beta = (1.0 - alpha);
+	int nwidth = alpha*src.cols;
+	resize(src, dst, Size(0,0),alpha,1);
 
-	addWeighted(src1, alpha, src2, beta, 0.0, dst);
-
-	imshow("Linear Blend", dst);
+	imshow("Seam carving", src);
 }
 
 int main()
 {
 	cout << "test" << endl;
-	Mat A = imread("Broadway_tower_edit.jpg");
-	namedWindow("images");
-	imshow("images", A);	waitKey();
-	Mat I;
-	cvtColor(A, I, CV_RGB2GRAY);
-	namedWindow("images");
-	imshow("images", I);	waitKey();
+	src = imread("Broadway_tower_edit.jpg");
+
+	/// Create Windows
+	namedWindow("Seam carving");
+
+	alpha_slider = 0;
+
+	
+	
+
+	/// Create Trackbars
+	char TrackbarName[50];
+	sprintf(TrackbarName, "Alpha x %d", alpha_slider_max);
+
+	createTrackbar(TrackbarName, "Seam carving", &alpha_slider, alpha_slider_max, on_trackbar);
+
+	/// Show some stuff
+	on_trackbar(alpha_slider, 0);
+
+	waitKey(0);
 }
