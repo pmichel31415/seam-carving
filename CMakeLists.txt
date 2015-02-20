@@ -7,4 +7,4 @@ FIND_PACKAGE(OpenCV REQUIRED)
 PROJECT(seam-carving)
 
 ADD_EXECUTABLE(seam-carving test.cpp)
-TARGET_LINK_LIBRARIES(homographie ${OpenCV_LIBS})
+TARGET_LINK_LIBRARIES(seam-carving ${OpenCV_LIBS})
