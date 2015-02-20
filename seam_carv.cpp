@@ -28,10 +28,10 @@ int which_min(int x, int y){
 }
 
 int which_min(int x, int y, int z){
-    if(min(x,y,z)==x){
+    if(min(x,y)==x && min(x, z)==x){
         return 0;
     }
-    if((min(x,y,z)==y)){
+    if((min(x,y)==y && min(y,z)==y)){
         return 1;
     }
     else{
@@ -81,11 +81,11 @@ void dsc(const Mat& I){ //Matrice I en N&B (uchar)
         }
     }
     
-//    //dispensable
-//    Vector<long> sums(table.height());
-//    for(int i=0; i<table.height(); i++){
-//        sums[i] = table(i,table.width()-1).data;
-//    }
+    //dispensable
+    Vector<long> sums(table.height());
+    for(int i=0; i<table.height(); i++){
+        sums[i] = table(i,table.width()-1).data;
+    }
     
     Mat reslt;
     cvtColor(I, reslt, COLOR_GRAY2RGB); //matrice pour rtacer un chemin (test)
@@ -108,5 +108,6 @@ void dsc(const Mat& I){ //Matrice I en N&B (uchar)
     }
     
     imshow("path", reslt);
+    waitKey();
     
 }

@@ -31,6 +31,6 @@ int main()
 	imshow("images", I);	waitKey();
 	imshow("images", toGrad(I));   waitKey();
     
-//    dsc(I);
+    dsc(I);
 
 }
