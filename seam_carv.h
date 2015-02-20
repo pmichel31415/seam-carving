@@ -12,9 +12,9 @@
 using namespace cv;
 using namespace std;
 
-#define LEFT -1
+#define UP -1
 #define MID 0
-#define RIGHT 1
+#define DWN 1
 
 struct node{
     long data;
@@ -45,5 +45,8 @@ public:
 };
 
 Mat toGrad(const Mat& I);
+int which_min(int x, int y);
+int which_min(int x, int y, int z);
+void dsc(const Mat& I);
 
 #endif
