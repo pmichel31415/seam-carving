@@ -27,6 +27,7 @@ int which_min(int x, int y){
     }
 }
 
+<<<<<<< HEAD
 int which_min(int x, int y, int z){
     if(min(x,y,z)==x){
         return 0;
@@ -90,3 +91,63 @@ void dsc(const Mat& I){
     //sort sums --> find path from min sums
     
 }
+=======
+//int which_min(int x, int y, int z){
+//    if(min(x,y,z)==x){
+//        return 0;
+//    }
+//    elif((min(x,y,z)==y)){
+//        return 1;
+//    }
+//    else{
+//        return 2;
+//    }
+//}
+
+//Dynamic Programming method for seam carving
+
+//void dsc(const Mat& I){
+//    
+//}
+//
+//         build a table with node, width is m, and height is n;
+//         init whole table with value 0;
+//         int t=0;
+//         for j=0: height{
+//             for i=0: width{
+//                 if(j==0){
+//                     //I used gradient map as my energy map.
+//                     table[i][j].data = energy[i][j];
+//                     table[i][j].path = 0;
+//                 }
+//                 else{
+//                     //most left col, have no upper-left pixel
+//                     if(i==0){
+//                         t = which_min(table[i+MID][j-1].data, table[i+RIGHT][j-1].data);
+//                         table[i][j].data = energy[i][j] + table[i+MID+t][j-1].data;
+//                         table[i][j].path = MID+t;
+//                     }
+//                     //most right col, have no upper-right pixel
+//                     elif(i==width-1){
+//                         t = which_min(table[i+LEFT][j-1].data, table[i+MID][j-1].data);
+//                         table[i][j].data = energy[i][j] + table[i+LEFT+t][j-1].data;
+//                         table[i][j].path = LEFT+t;
+//                     }
+//                     else{
+//                         t = which_min(table[i+LEFT][j-1].data,
+//                                       table[i+MID][j-1].data,
+//                                       table[i+RIGHT][j-1].data);
+//                         table[i][j].data = energy[i][j] + table[i+LEFT+t][j-1].data;
+//                         table[i][j].path = LEFT+t;
+//                     }
+//                 }
+//             }     
+//         }
+//         sum = copyfrom(table( :height-1));
+//         //now use any sort method to sort the sum array
+//         sum = Sort(sum);
+//         //and now sum[0] is the min seam energy.
+//         path = FindPath(sum[0]);
+//
+//
+>>>>>>> origin/master
