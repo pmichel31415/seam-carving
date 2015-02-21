@@ -7,6 +7,7 @@
 #include "gui.h"
 
 #include "seam_carv.h"
+#include "seam_carv_random.h"
 
 using namespace cv;
 using namespace std;
@@ -31,6 +32,8 @@ int main()
 	imshow("images", I);	waitKey();
 	imshow("images", toGrad(I));   waitKey();
     
-    dsc(I);
+	imshow("images", show_all_path(I));   waitKey();
+	
+    //dsc(I);
 
 }

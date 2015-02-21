@@ -8,6 +8,7 @@
 #include <opencv2/features2d/features2d.hpp>
 #include <opencv2/nonfree/features2d.hpp>
 #include <opencv2/calib3d/calib3d.hpp>
+#include <time.h> 
 
 using namespace cv;
 using namespace std;
@@ -30,6 +31,9 @@ struct Path{
 Mat get_energy(const Mat& I);
 
 int get_random_int_in_range(int inf, int sup);
+int get_next_weighted(double weight_1, double weight_2, double weight_3);
+double safe_get(const Mat& E, int y, int x);
+int which_min_paul(int x, int y, int z);
 
 Path random_walk_x(const Mat& I);
 Path random_walk_y(const Mat& I);
@@ -38,6 +42,9 @@ Path min_energy_path(const Vector<Path>& V);
 
 Path random_carv_x(const Mat& I, unsigned int nb_tries);
 Path random_carv_y(const Mat& I, unsigned int nb_tries);
+
+Mat show_path(const Mat& src);
+Mat show_all_path(const Mat& src);
 
 void carve(const Mat& src, Mat& dst);
 

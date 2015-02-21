@@ -42,7 +42,7 @@ int which_min(int x, int y, int z){
 //Dynamic Programming method for seam carving
 
 void dsc(const Mat& I){ //Matrice I en N&B (uchar)
-    Table<node> table(I.cols, I.rows);
+    Table<node> table(I.rows, I.cols);
     Mat grad = toGrad(I);
     
     for(int i =0; i<table.width(); i++){
