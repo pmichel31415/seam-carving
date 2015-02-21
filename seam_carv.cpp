@@ -28,7 +28,7 @@ int which_min(int x, int y){
 }
 
 int which_min(int x, int y, int z){
-    if(min(x,y)==x && min(x, z)==x){
+    if(min(x, y)==x && min(x, z)==x){
         return 0;
     }
     if((min(x,y)==y && min(y,z)==y)){
@@ -42,7 +42,7 @@ int which_min(int x, int y, int z){
 //Dynamic Programming method for seam carving
 
 void dsc(const Mat& I){ //Matrice I en N&B (uchar)
-    Table<node> table(I.rows, I.cols);
+    Table<node> table(I.cols, I.rows);
     Mat grad = toGrad(I);
     
     for(int i =0; i<table.width(); i++){
@@ -54,7 +54,7 @@ void dsc(const Mat& I){ //Matrice I en N&B (uchar)
     
     int t=0;
     for(int j =0; j<table.width(); j++){
-        for(int i =0; i<table.height(); i++){
+        for(int i = 0; i<table.height(); i++){
             if(j==0){
                 table(i,j).data = grad.at<short>(i,j);// short <-- type de gradd CV_16S
                 table(i,j).path = 0;
@@ -88,7 +88,7 @@ void dsc(const Mat& I){ //Matrice I en N&B (uchar)
     }
     
     Mat reslt;
-    cvtColor(I, reslt, COLOR_GRAY2RGB); //matrice pour rtacer un chemin (test)
+    cvtColor(I, reslt, COLOR_GRAY2RGB); //matrice pour tacer un chemin (test)
     
     //min de sum(abs(grad))
     long min = table(0,table.width()-1).data;
