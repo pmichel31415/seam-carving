@@ -3,6 +3,7 @@
 
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include "seam_carv_random.h"
 
 using namespace cv;
 using namespace std;

@@ -33,7 +33,10 @@ int main()
 	imshow("images", toGrad(I));   waitKey();
     
 	imshow("images", show_all_path(I));   waitKey();
-	
+	imshow("images", A);	waitKey();
+	Mat resize_A;
+	resize_seam_carv_random(A, resize_A, 0.95, 1,1);
+	imshow("carved image", resize_A);	waitKey();
     //dsc(I);
 
 }

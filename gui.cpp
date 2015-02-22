@@ -20,12 +20,9 @@ void on_trackbar_width(int, void*)
 
 	width_ratio = (double)(width_slider) / width_slider_max;
 
-	/*if (dst.size().height != src.size().height){
+	
 
-	resize(src, dst, Size(0, 0), width_ratio, 1);
-	}*/
-
-	resize(src, dst, Size(0, 0), width_ratio, height_ratio);
+	resize_seam_carv_random(src, dst, width_ratio, height_ratio,10);
 
 	imshow("Seam carving", dst);
 }
@@ -36,7 +33,7 @@ void on_trackbar_height(int, void*)
 		height_slider = 1;
 	}
 	height_ratio = (double)(height_slider) / height_slider_max;
-	resize(src, dst, Size(0, 0), width_ratio, height_ratio);
+	resize_seam_carv_random(src, dst, width_ratio, height_ratio,10);
 
 	imshow("Seam carving", dst);
 }

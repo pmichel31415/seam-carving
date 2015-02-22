@@ -60,7 +60,7 @@ int get_next_weighted(double x, double y, double z){
 }
 
 double safe_get(const Mat& E, int y, int x){
-	if (y >= E.size().height || y < 0 || x >= E.size().width || y < 0){
+	if (y >= E.size().height || y < 0 || x >= E.size().width || x < 0){
 		return -1;
 	}
 	else{
@@ -89,7 +89,7 @@ Path random_walk_x(const Mat& I){
 	ret.path[0].y = 0;
 
 	ret.energy = safe_get(I,ret.path[0].y, ret.path[0].x);
-	for (int y = 1; y < I.size().height; y++){
+	for (int y = 1; y < I.size().height; ++y){
 
 		ret.path[y].x = ret.path[y - 1].x + get_next_weighted(safe_get(I, y, ret.path[y - 1].x - 1), safe_get(I, y, ret.path[y - 1].x), safe_get(I, y, ret.path[y - 1].x + 1));// get_random_int_in_range(-1, 1);
 		//check for bounds
@@ -149,8 +149,9 @@ Path min_energy_path(const Vector<Path>& V){
 }
 
 Path random_carv_x(const Mat& I, int nb_tries){
+	srand(time(NULL));
 	Mat energy = get_energy(I);
-	Vector<Path> paths;
+	Vector<Path> paths(nb_tries);
 	for (int k = 0; k < nb_tries; k++){
 		paths[k] = random_walk_x(energy);
 	}
@@ -201,10 +202,75 @@ Mat show_all_path(const Mat& src){
 	return ret;
 }
 
-Mat carve_x(const Mat& src){
-	Mat ret = src;
+Mat carve_x(const Mat& src, int nb_tries){
+	Mat ret(src.rows, src.cols - 1, src.type(), Scalar(0, 0, 0));
+	Path seam = random_carv_x(src, nb_tries);
+
+	int src_c;
+	for (int r = 0; r < src.rows; ++r){
+		
+		for (int c = 0; c < src.cols-1; ++c){
+			if (c>seam.path[r].x){
+				src_c = c + 1;
+			}
+			else{
+				src_c = c;
+			}
+			ret.at<Vec3b>(r, c) = src.at<Vec3b>(r,src_c);
+		}
+	}
+
+	return ret;
+
 }
 
-void carve(const Mat& src, Mat& dst){
+Mat carve_y(const Mat& src, int nb_tries){
+	Mat ret(src.rows - 1, src.cols, src.type(), Scalar(0, 0, 0));
+	Path seam = random_carv_y(src, nb_tries);
 
+	int src_r;
+	for (int c = 0; c < src.cols ; ++c){
+
+		for (int r = 0; r < src.rows - 1; ++r){
+			if (r>seam.path[c].y){
+				src_r = r + 1;
+			}
+			else{
+				src_r = r;
+			}
+			ret.at<Vec3b>(r, c) = src.at<Vec3b>(src_r, c);
+		}
+	}
+
+	return ret;
+
+}
+
+void carve(const Mat& src, Mat& dst, int nb_tries){
+	int delta_r = src.rows - dst.rows;
+	int delta_c = src.cols - dst.cols;
+	if (delta_r >= 0 && delta_c >= 0){
+		Mat buff = carve_y(src,nb_tries);
+		for (int r = 1; r < delta_r; ++r){
+			buff = carve_y(buff, nb_tries);
+		}
+		buff = carve_x(buff, nb_tries);
+		for (int c = 1; c < delta_c; ++c){
+			buff = carve_x(buff, nb_tries);
+		}
+		dst = buff;
+		
+	}
+	else{
+		dst = src;
+	}
+}
+
+void resize_seam_carv_random(const Mat& src, Mat& dst, double ratio_x, double ratio_y, int nb_tries){
+	int n_rows = ratio_y*src.rows;
+	int n_cols = ratio_x*src.cols;
+	Mat ret(n_rows, n_cols, src.type(), Scalar(0, 0, 0));
+
+	carve(src, ret, nb_tries);
+	dst = ret;
 }
