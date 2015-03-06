@@ -37,16 +37,16 @@ public:
     T& operator()(int i, int j) {return (*this)[i+m*j];}
 
     int width(){
-        return m;
+        return n;
     }
     int height(){
-        return n;
+        return m;
     }
 };
 
 Mat toGrad(const Mat& I);
-int which_min(int x, int y);
-int which_min(int x, int y, int z);
+int which_min(long x, long y);
+int which_min(long x, long y, long z);
 void dsc(const Mat& I);
 
 #endif
