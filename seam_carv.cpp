@@ -2,7 +2,6 @@
 
 Mat toGrad(const Mat& I){ //Matrice I en N&B (uchar)
     Mat grad_x, grad_y, grad;
-//    Mat abs_grad_x, abs_grad_y;
     
     /// Gradient X
     Sobel( I, grad_x, CV_16S, 1, 0);
@@ -45,8 +44,6 @@ void dsc(const Mat& I){ //Matrice I en N&B (uchar)
     Table<node> table(I.rows, I.cols); // structure de données pour determiner les chemins
     Mat grad = toGrad(I); // "carte" d'energie
     
-    imshow("dsc" ,toGrad(I)); waitKey();
-
     //initialisation a 0
     for(int i =0; i<table.height(); i++){
         for(int j =0; j<table.width(); j++){
@@ -60,7 +57,7 @@ void dsc(const Mat& I){ //Matrice I en N&B (uchar)
         for(int i = 0; i<table.height(); i++){
             // initialisation sur la premiere colone
             if(j==0){
-                table(i,j).data = (long)grad.at<short>(i,j);// short <-- type de grad CV_16S
+                table(i,j).data = (long)grad.at<uchar>(i,j);// short <-- type de grad CV_16S
                 
             }
             //cas general
@@ -68,20 +65,19 @@ void dsc(const Mat& I){ //Matrice I en N&B (uchar)
                 //cas particulier pour la ligne sup
                 if(i==0){
                     t = which_min(table(i+MID,j-1).data, table(i+DWN,j-1).data);
-                    table(i,j).data = (long)grad.at<short>(i,j) + table(i+MID+t,j-1).data;
+                    table(i,j).data = (long)grad.at<uchar>(i,j) + table(i+MID+t,j-1).data;
                     table(i,j).path = MID+t;
-                    cout << "MID : "<< table(i+MID,j-1).data << " / DWN : " << table(i+DWN,j-1).data << "  -> " << t<<endl;
                 }
                 //cas particulier pour la ligne inf
                 if(i==table.height()-1){
                     t = which_min(table(i+UP,j-1).data, table(i+MID,j-1).data);
-                    table(i,j).data = (long)grad.at<short>(i,j) + table(i+UP+t,j-1).data;
+                    table(i,j).data = (long)grad.at<uchar>(i,j) + table(i+UP+t,j-1).data;
                     table(i,j).path = UP+t;
                 }
                 //cas general
                 if(i>0 && i<table.height()-1){
                     t = which_min(table(i+UP,j-1).data, table(i+MID,j-1).data, table(i+DWN,j-1).data);
-                    table(i,j).data = (long)grad.at<short>(i,j) + table(i+UP+t,j-1).data;
+                    table(i,j).data = (long)grad.at<uchar>(i,j) + table(i+UP+t,j-1).data;
                     table(i,j).path = UP+t;
                 }
             }
@@ -101,7 +97,7 @@ void dsc(const Mat& I){ //Matrice I en N&B (uchar)
             i_min = i;
         }
     }
-    
+   
     //passage sur le chemin
     for(int j=table.width()-1; j>=0; j--){
         reslt.at<Vec3b>(i_min,j) = Vec3b(0,0,255);

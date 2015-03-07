@@ -31,10 +31,11 @@ int main()
 	Mat I;
 	cvtColor(A, I, CV_RGB2GRAY);
 	namedWindow("images");
-//	imshow("images", I);	waitKey();
-    imshow("images",I);   waitKey();
+	imshow("images", I);	waitKey();
+    imshow("images",toGrad(I));   waitKey();
     
     //lancement pour seam_carv_random:
+<<<<<<< Updated upstream
 	imshow("images", show_all_path(I));   waitKey();
 	imshow("images", A);	waitKey();
 	Mat resize_A;
@@ -42,6 +43,14 @@ int main()
 
 	imshow("carved image", resize_A);	waitKey();
     
+=======
+//	imshow("images", show_all_path(I));   waitKey();
+//	imshow("images", A);	waitKey();
+//	Mat resize_A;
+//	resize_seam_carv_random(A, resize_A, 0.95, 1,1);
+//	imshow("carved image", resize_A);	waitKey();
+//    
+>>>>>>> Stashed changes
     //lancement pour dsc :
     //dsc(I);
 
