@@ -40,16 +40,18 @@ Path random_walk_y(const Mat& I);
 
 Path min_energy_path(const Vector<Path>& V);
 
-Path random_carv_x(const Mat& I, int nb_tries);
-Path random_carv_y(const Mat& I, int nb_tries);
+Path random_carv_x(const Mat& E, int nb_tries);
+Path random_carv_y(const Mat& E, int nb_tries);
 
 Mat show_path(const Mat& src);
 Mat show_all_path(const Mat& src);
 
-Mat carve_x(const Mat& src, int nb_tries);
-Mat carve_y(const Mat& src, int nb_tries);
-void carve(const Mat& src, Mat& dst,int nb_tries);
+Mat carve_x(const Mat& src, Path seam, int nb_tries);
+Mat e_carve_x(const Mat& src, Path seam, int nb_tries);
+Mat carve_y(const Mat& src, Path seam, int nb_tries);
+Mat e_carve_y(const Mat& src, Path seam, int nb_tries);
+void carve(const Mat& src, Mat& dst, int nb_tries);
 
-void resize_seam_carv_random(const Mat& src, Mat& dst, double ratio_x, double ratio_y, int nb_tries);
+void resize_seam_carv_random(Mat& src, double ratio_x, double ratio_y, int nb_tries);
 
 #endif

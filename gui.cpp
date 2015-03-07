@@ -22,9 +22,9 @@ void on_trackbar_width(int, void*)
 
 	
 
-	resize_seam_carv_random(src, dst, width_ratio, height_ratio,10);
+	resize_seam_carv_random(src, width_ratio, height_ratio,2);
 
-	imshow("Seam carving", dst);
+	imshow("Seam carving", src);
 }
 
 void on_trackbar_height(int, void*)
@@ -33,14 +33,14 @@ void on_trackbar_height(int, void*)
 		height_slider = 1;
 	}
 	height_ratio = (double)(height_slider) / height_slider_max;
-	resize_seam_carv_random(src, dst, width_ratio, height_ratio,10);
+	resize_seam_carv_random(src, width_ratio, height_ratio,2);
 
-	imshow("Seam carving", dst);
+	imshow("Seam carving", src);
 }
 
 void init_gui(){
 	src = imread("Broadway_tower_edit.jpg");
-	dst = imread("Broadway_tower_edit.jpg");
+	//dst = imread("Broadway_tower_edit.jpg");
 	/// Create Windows
 	namedWindow("Seam carving", 1);
 
