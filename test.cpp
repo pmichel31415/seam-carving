@@ -35,14 +35,15 @@ int main()
     imshow("images",I);   waitKey();
     
     //lancement pour seam_carv_random:
-//	imshow("images", show_all_path(I));   waitKey();
-//	imshow("images", A);	waitKey();
-//	Mat resize_A;
-//	resize_seam_carv_random(A, resize_A, 0.95, 1,1);
-//	imshow("carved image", resize_A);	waitKey();
+	imshow("images", show_all_path(I));   waitKey();
+	imshow("images", A);	waitKey();
+	Mat resize_A;
+	resize_A = resize_seam_carv_random(A, 1, 0.9, 100);
+
+	imshow("carved image", resize_A);	waitKey();
     
     //lancement pour dsc :
-    dsc(I);
+    //dsc(I);
 
 
 }

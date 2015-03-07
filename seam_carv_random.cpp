@@ -150,7 +150,6 @@ Path min_energy_path(const Vector<Path>& V){
 
 Path random_carv_x(const Mat& E, int nb_tries){
 	srand(time(NULL));
-	//Mat energy = get_energy(E);
 	Vector<Path> paths(nb_tries);
 	for (int k = 0; k < nb_tries; k++){
 		paths[k] = random_walk_x(E);
@@ -161,7 +160,6 @@ Path random_carv_x(const Mat& E, int nb_tries){
 
 Path random_carv_y(const Mat& E, int nb_tries){
 	srand(time(NULL));
-	//Mat energy = get_energy(E);
 	Vector<Path> paths(nb_tries);
 	for (int k = 0; k < nb_tries; k++){
 		paths[k] = random_walk_y(E);
@@ -170,11 +168,10 @@ Path random_carv_y(const Mat& E, int nb_tries){
 	return min_energy_path(paths);
 }
 
-Mat show_path(const Mat& src){
+Mat show_path(const Mat& src, Path p){
 	Mat ret;
 	cvtColor(src, ret, COLOR_GRAY2RGB);
 
-	Path p = random_carv_y(src, 10);
 
 	for (int k = 0; k < p.path.size(); ++k){
 		ret.at<Vec3b>(p.path[k].y, p.path[k].x) = Vec3b(0, 0, 255);
@@ -304,19 +301,18 @@ void carve(const Mat& src, Mat& dst, int nb_tries){
 	int delta_r = src.rows - dst.rows;
 	int delta_c = src.cols - dst.cols;
 	Path seam;
-	Mat buff;
+	Mat buff = src;
 	Mat energy = get_energy(src);
 	
 	if (delta_r > 0 || delta_c > 0){
 		for (int r = 0; r < delta_r; ++r){
 			seam = random_carv_y(energy, nb_tries);
-			buff = carve_y(src, seam, nb_tries);
+			buff = carve_y(buff, seam, nb_tries);
 			energy = e_carve_y(energy, seam, nb_tries);
-			
 		}
 		for (int c = 0; c < delta_c; ++c){
 			seam = random_carv_x(energy, nb_tries);
-			buff = carve_x(src, seam, nb_tries);
+			buff = carve_x(buff, seam, nb_tries);
 			energy = e_carve_x(energy, seam, nb_tries);
 		}
 		dst = buff;
@@ -327,11 +323,11 @@ void carve(const Mat& src, Mat& dst, int nb_tries){
 	}
 }
 
-void resize_seam_carv_random(Mat& src, double ratio_x, double ratio_y, int nb_tries){
+Mat resize_seam_carv_random(Mat& src, double ratio_x, double ratio_y, int nb_tries){
 	int n_rows = ratio_y*src.rows;
 	int n_cols = ratio_x*src.cols;
 	Mat ret(n_rows, n_cols, src.type(), Scalar(0, 0, 0));
 
 	carve(src, ret, nb_tries);
-	src = ret;
+	return ret;
 }
