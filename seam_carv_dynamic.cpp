@@ -56,13 +56,13 @@ public:
                     //cas particulier pour la ligne inf
                     if(i==height()-1){
                         t = which_min(operator()(i+UP,j-1).data, operator()(i+MID,j-1).data);
-                        operator()(i,j).data = (long)energy.at<uchar>(i,j) + operator()(i+UP+t,j-1).data;
+                        operator()(i,j).data = (long)(energy.at<uchar>(i,j)*energy.at<uchar>(i,j)) + operator()(i+UP+t,j-1).data;
                         operator()(i,j).path = UP+t;
                     }
                     //cas general
                     if(i>0 && i<height()-1){
                         t = which_min(operator()(i+UP,j-1).data, operator()(i+MID,j-1).data, operator()(i+DWN,j-1).data);
-                        operator()(i,j).data = (long)energy.at<uchar>(i,j) + operator()(i+UP+t,j-1).data;
+                        operator()(i,j).data = (long)(energy.at<uchar>(i,j)*energy.at<uchar>(i,j)) + operator()(i+UP+t,j-1).data;
                         operator()(i,j).path = UP+t;
                     }
                 }
@@ -130,7 +130,7 @@ void dsc(const Mat& I){ //Matrice I en N&B (uchar)
     
     imshow("original", I); waitKey();
     
-    for(int i=1; i<=100; i++){
+    for(int i=1; i<=600; i++){
         Table table(reslt.rows, reslt.cols);
         table.generate(energy);
         Path p = table.get_min_path();
