@@ -6,7 +6,7 @@ Mat get_energy(const Mat& I){ //Matrice I en N&B (uchar)
     /// Gradient X
     Sobel( I, grad_x, CV_16S, 1, 0);
     /// Gradient Y
-    Sobel( I, grad_y, CV_16S, 0, 1);
+	Sobel(I, grad_y, CV_16S, 0, 1);
     
     convertScaleAbs( grad_x, grad_x );
     convertScaleAbs( grad_y, grad_y );

@@ -11,27 +11,28 @@ int get_next_weighted(double x, double y, double z){
 	double w1, w2, w3;
 	if (x == -1){
 		w1 = 0;
-		w2 = 1 / y;
-		w3 = 1 / z;
+		w2 = 1 / (y+1);
+		w3 = 1 / (z+1);
 	}
 	else if (y == -1){
-		w1 = 1 / x;
+		w1 = 1 / (x+1);
 		w2 = 0;
-		w3 = 1 / z;
+		w3 = 1 / (z + 1);
 	}
 	else if (z == -1){
-		w1 = 1 / x;
-		w2 = 1 / y;
+		w1 = 1 / (x + 1);
+		w2 = 1 / (y + 1);
 		w3 = 0;
 	}
 	else{
-		w1 = 1 / x;
-		w2 = 1 / y;
-		w3 = 1 / z;
+		w1 = 1 / (x + 1);
+		w2 = 1 / (y + 1);
+		w3 = 1 / (z + 1);
 	}
 
+
 	
-	double r = (double) rand() / RAND_MAX;
+  	double r = (double) rand() / RAND_MAX;
 	double weight = w1 + w2 + w3;
 	double t1 = w1 / weight;
 	double t2 = (w2 + w3) / weight;
@@ -172,16 +173,18 @@ Mat show_all_path(const Mat& src){
 	Mat ret;
 	cvtColor(src, ret, COLOR_GRAY2RGB);
 	Mat energy = get_energy(src);
-	Vector<Path> paths(100);
-	for (int k = 0; k < 100; k++){
-		paths[k] = random_walk_y(energy);
-		for (int l = 0; l < paths[k].path.size(); ++l){
-			ret.at<Vec3b>(paths[k].path[l].y, paths[k].path[l].x) = Vec3b(0, 0, 255);
+	for (int l = 0; l < 100; ++l){
+		Vector<Path> paths(100);
+		for (int k = 0; k < 100; k++){
+			paths[k] = random_walk_y(energy);
+			//for (int l = 0; l < paths[k].path.size(); ++l){
+			//	ret.at<Vec3b>(paths[k].path[l].y, paths[k].path[l].x) = Vec3b(0, 0, 255);
+			//}
 		}
-	}
-	Path p = min_energy_path(paths);
-	for (int k = 0; k < p.path.size(); ++k){
-		ret.at<Vec3b>(p.path[k].y, p.path[k].x) = Vec3b(0, 255, 255);
+		Path p = min_energy_path(paths);
+		for (int k = 0; k < p.path.size(); ++k){
+			ret.at<Vec3b>(p.path[k].y, p.path[k].x) = Vec3b(0, 255, 255);
+		}
 	}
 	return ret;
 }
@@ -199,11 +202,13 @@ void carve(Mat& src, int d_rows, int d_cols, int nb_tries){
 			seam = random_carv_y(energy, nb_tries);
 			carve_y(src, seam, nb_tries);
 			e_carve_y(energy, seam, nb_tries);
+			imshow("images", src); waitKey();
 		}
 		for (int c = 0; c < delta_c; ++c){
 			seam = random_carv_x(energy, nb_tries);
 			carve_x(src, seam, nb_tries);
 			e_carve_x(energy, seam, nb_tries);
+			imshow("images", src);
 		}
 		
 	}

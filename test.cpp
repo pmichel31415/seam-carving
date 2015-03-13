@@ -33,7 +33,7 @@ int main()
     //lancement pour seam_carv_random:
 	imshow("images", show_all_path(I));   waitKey();
 	imshow("images", A);	waitKey();
-	resize_seam_carv_random(A, 1, 0.9, 100);
+ 	resize_seam_carv_random(A, 1, 0.9, 100);
 
 	imshow("carved image", A);	waitKey();
     

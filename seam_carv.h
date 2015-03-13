@@ -20,7 +20,7 @@ struct Pixel{
 
 struct Path{
 	Vector<Pixel> path;
-	double energy;
+	uchar energy;
 };
 
 Mat get_energy(const Mat& I);
