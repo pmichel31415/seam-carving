@@ -12,6 +12,16 @@
 using namespace cv;
 using namespace std;
 
+struct Pixel{
+	int x;
+	int y;
+	float value;
+};
+
+struct Path{
+	Vector<Pixel> path;
+	double energy;
+};
 
 Mat get_energy(const Mat& I);
 

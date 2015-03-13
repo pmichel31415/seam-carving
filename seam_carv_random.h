@@ -18,16 +18,7 @@ using namespace std;
 #define MID 0
 #define RIGHT 1
 
-struct Pixel{
-	int x;
-	int y;
-	float value;
-};
 
-struct Path{
-	Vector<Pixel> path;
-	double energy;
-};
 
 
 int get_random_int_in_range(int inf, int sup);
