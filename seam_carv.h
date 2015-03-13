@@ -15,4 +15,9 @@ using namespace std;
 
 Mat get_energy(const Mat& I);
 
+Mat carve_x(const Mat& src, Path seam, int nb_tries);
+Mat e_carve_x(const Mat& src, Path seam, int nb_tries);
+Mat carve_y(const Mat& src, Path seam, int nb_tries);
+Mat e_carve_y(const Mat& src, Path seam, int nb_tries);
+
 #endif

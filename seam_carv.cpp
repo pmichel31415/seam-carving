@@ -14,3 +14,101 @@ Mat get_energy(const Mat& I){ //Matrice I en N&B (uchar)
     
     return grad;
 }
+
+Mat carve_x(const Mat& src, Path seam, int nb_tries){
+	Mat ret(src.rows, src.cols - 1, src.type(), Scalar(0, 0, 0));
+
+
+	int src_c;
+	for (int r = 0; r < src.rows; ++r){
+
+		for (int c = 0; c < src.cols - 1; ++c){
+			if (c>seam.path[r].x){
+				src_c = c + 1;
+			}
+			else{
+				src_c = c;
+			}
+
+			ret.at<Vec3b>(r, c) = src.at<Vec3b>(r, src_c);
+
+
+		}
+	}
+
+	return ret;
+
+}
+
+Mat e_carve_x(const Mat& src, Path seam, int nb_tries){
+	Mat ret(src.rows, src.cols - 1, src.type(), Scalar(0, 0, 0));
+
+
+	int src_c;
+	for (int r = 0; r < src.rows; ++r){
+
+		for (int c = 0; c < src.cols - 1; ++c){
+			if (c>seam.path[r].x){
+				src_c = c + 1;
+			}
+			else{
+				src_c = c;
+			}
+
+			ret.at<uchar>(r, c) = src.at<uchar>(r, src_c);
+
+
+		}
+	}
+
+	return ret;
+
+}
+
+Mat carve_y(const Mat& src, Path seam, int nb_tries){
+	Mat ret(src.rows - 1, src.cols, src.type());
+
+
+	int src_r;
+	for (int c = 0; c < src.cols; ++c){
+
+		for (int r = 0; r < src.rows - 1; ++r){
+			if (r>seam.path[c].y){
+				src_r = r + 1;
+			}
+			else{
+				src_r = r;
+			}
+
+			ret.at<Vec3b>(r, c) = src.at<Vec3b>(src_r, c);
+
+		}
+	}
+
+	return ret;
+
+}
+
+Mat e_carve_y(const Mat& src, Path seam, int nb_tries){
+	Mat ret(src.rows - 1, src.cols, src.type());
+
+
+	int src_r;
+	for (int c = 0; c < src.cols; ++c){
+
+		for (int r = 0; r < src.rows - 1; ++r){
+			if (r>seam.path[c].y){
+				src_r = r + 1;
+			}
+			else{
+				src_r = r;
+			}
+
+			ret.at<uchar>(r, c) = src.at<uchar>(src_r, c);
+
+		}
+	}
+
+	return ret;
+
+}

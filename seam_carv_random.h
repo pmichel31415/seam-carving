@@ -9,6 +9,7 @@
 #include <opencv2/nonfree/features2d.hpp>
 #include <opencv2/calib3d/calib3d.hpp>
 #include <time.h> 
+#include "seam_carv.h"
 
 using namespace cv;
 using namespace std;
@@ -28,7 +29,6 @@ struct Path{
 	double energy;
 };
 
-Mat get_energy(const Mat& I);
 
 int get_random_int_in_range(int inf, int sup);
 int get_next_weighted(double weight_1, double weight_2, double weight_3);
@@ -46,10 +46,7 @@ Path random_carv_y(const Mat& E, int nb_tries);
 Mat show_path(const Mat& src, Path p);
 Mat show_all_path(const Mat& src);
 
-Mat carve_x(const Mat& src, Path seam, int nb_tries);
-Mat e_carve_x(const Mat& src, Path seam, int nb_tries);
-Mat carve_y(const Mat& src, Path seam, int nb_tries);
-Mat e_carve_y(const Mat& src, Path seam, int nb_tries);
+
 void carve(const Mat& src, Mat& dst, int nb_tries);
 
 Mat resize_seam_carv_random(Mat& src, double ratio_x, double ratio_y, int nb_tries);

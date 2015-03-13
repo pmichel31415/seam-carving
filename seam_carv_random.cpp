@@ -1,19 +1,6 @@
 #include "seam_carv_random.h"
 
-Mat get_energy(const Mat& I){ //Matrice I en N&B (uchar)
-	Mat grad_x, grad_y, grad;
-	Mat abs_grad_x, abs_grad_y;
 
-	/// Gradient X
-	Sobel(I, grad_x, CV_16S, 1, 0);
-	/// Gradient Y
-	Sobel(I, grad_y, CV_16S, 0, 1);
-	
-	convertScaleAbs(grad_x, grad_x);
-	convertScaleAbs(grad_y, grad_y);
-	addWeighted(grad_x, 0.5, grad_y, 0.5, 0, grad, CV_16S);
-	return grad;
-}
 
 int get_random_int_in_range(int inf, int sup){
 	return inf + rand() % (1 + sup - inf);
@@ -64,7 +51,7 @@ double safe_get(const Mat& E, int y, int x){
 		return -1;
 	}
 	else{
-		return static_cast<double>(E.at<short>(y, x));
+		return static_cast<double>(E.at<uchar>(y, x));
 	}
 }
 
@@ -199,103 +186,7 @@ Mat show_all_path(const Mat& src){
 	return ret;
 }
 
-Mat carve_x(const Mat& src,Path seam, int nb_tries){
-	Mat ret(src.rows, src.cols - 1, src.type(), Scalar(0, 0, 0));
-	
 
-	int src_c;
-	for (int r = 0; r < src.rows; ++r){
-		
-		for (int c = 0; c < src.cols-1; ++c){
-			if (c>seam.path[r].x){
-				src_c = c + 1;
-			}
-			else{
-				src_c = c;
-			}
-			
-				ret.at<Vec3b>(r, c) = src.at<Vec3b>(r, src_c);
-			
-			
-		}
-	}
-
-	return ret;
-
-}
-
-Mat e_carve_x(const Mat& src, Path seam, int nb_tries){
-	Mat ret(src.rows, src.cols - 1, src.type(), Scalar(0, 0, 0));
-
-
-	int src_c;
-	for (int r = 0; r < src.rows; ++r){
-
-		for (int c = 0; c < src.cols - 1; ++c){
-			if (c>seam.path[r].x){
-				src_c = c + 1;
-			}
-			else{
-				src_c = c;
-			}
-
-			ret.at<short>(r, c) = src.at<short>(r, src_c);
-
-
-		}
-	}
-
-	return ret;
-
-}
-
-Mat carve_y(const Mat& src, Path seam, int nb_tries){
-	Mat ret(src.rows - 1, src.cols, src.type());
-	
-
-	int src_r;
-	for (int c = 0; c < src.cols ; ++c){
-
-		for (int r = 0; r < src.rows - 1; ++r){
-			if (r>seam.path[c].y){
-				src_r = r + 1;
-			}
-			else{
-				src_r = r;
-			}
-			
-				ret.at<Vec3b>(r, c) = src.at<Vec3b>(src_r, c);
-			
-		}
-	}
-
-	return ret;
-
-}
-
-Mat e_carve_y(const Mat& src, Path seam, int nb_tries){
-	Mat ret(src.rows - 1, src.cols, src.type());
-
-
-	int src_r;
-	for (int c = 0; c < src.cols; ++c){
-
-		for (int r = 0; r < src.rows - 1; ++r){
-			if (r>seam.path[c].y){
-				src_r = r + 1;
-			}
-			else{
-				src_r = r;
-			}
-
-			ret.at<short>(r, c) = src.at<short>(src_r, c);
-
-		}
-	}
-
-	return ret;
-
-}
 
 void carve(const Mat& src, Mat& dst, int nb_tries){
 	int delta_r = src.rows - dst.rows;
