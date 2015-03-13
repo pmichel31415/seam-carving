@@ -50,7 +50,7 @@ int main()
 //    
 
     //lancement pour dsc :
-    //dsc(I);
+    dsc(I);
 
 
 }
