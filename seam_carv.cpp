@@ -36,7 +36,8 @@ void carve_x(Mat& src, Path seam, int nb_tries){
 	}
 
 	Rect ROI(0, 0, src.rows, src.cols - 1);
-	src = src(ROI);
+	Mat dst = src(ROI);
+	src = dst;
 
 }
 
@@ -61,7 +62,8 @@ void e_carve_x(Mat& src, Path seam, int nb_tries){
 	}
 
 	Rect ROI(0, 0, src.rows, src.cols - 1);
-	src = src(ROI);
+	Mat dst = src(ROI);
+	src = dst;
 
 }
 
@@ -85,7 +87,8 @@ Mat carve_y(Mat& src, Path seam, int nb_tries){
 	}
 
 	Rect ROI(0, 0, src.rows - 1, src.cols);
-	src = src(ROI);
+	Mat dst = src(ROI);
+	src = dst;
 
 }
 
@@ -109,6 +112,7 @@ void e_carve_y(Mat& src, Path seam, int nb_tries){
 	}
 
 	Rect ROI(0, 0, src.rows - 1, src.cols);
-	src = src(ROI);
+	Mat dst = src(ROI);
+	src = dst;
 
 }
