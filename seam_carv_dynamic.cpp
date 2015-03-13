@@ -9,21 +9,18 @@ struct Node{
 class Table: public Vector<Node> {
     int m,n;
     
-    void init(){
-        for(int i =0; i< height() ; i++){
-            for(int j =0; j< width(); j++){
-                operator()(i,j).path =0;
-                operator()(i,j).data=0;
-            }
-        }
-    }
-    
 public:
     
     Table(){}
     Table(int M, int N):Vector<Node>(M*N){
         m=M;
         n=N;
+        for(int i =0; i< height() ; i++){
+            for(int j =0; j< width(); j++){
+                operator()(i,j).path =0;
+                operator()(i,j).data=0;
+            }
+        }
     }
     
     inline Node operator()(int i, int j) const{ return (*this)[i+m*j];} //pour les methodes utilisant des const
@@ -39,35 +36,34 @@ public:
     
     
     void generate(const Mat& energy){ // energy matrice de meme taille que l'objet, de type CV_8U
-        this->init(); //initialisation a 0
         
         int t=0;
-        for(int j =0; j<this->width(); j++){
-            for(int i = 0; i<this->height(); i++){
+        for(int j =0; j<width(); j++){
+            for(int i = 0; i<height(); i++){
                 // initialisation sur la premiere colone
                 if(j==0){
-                    this->operator()(i,j).data = (long)energy.at<uchar>(i,j);// short <-- type de grad CV_16S
+                    operator()(i,j).data = (long)(energy.at<uchar>(i,j)*energy.at<uchar>(i,j)); //carré des energies --> magouilleuse style
                     
                 }
                 //cas general
                 else{
                     //cas particulier pour la ligne sup
                     if(i==0){
-                        t = which_min(this->operator()(i+MID,j-1).data, this->operator()(i+DWN,j-1).data);
-                        this->operator()(i,j).data = (long)energy.at<uchar>(i,j) + this->operator()(i+MID+t,j-1).data;
-                        this->operator()(i,j).path = MID+t;
+                        t = which_min(operator()(i+MID,j-1).data, operator()(i+DWN,j-1).data);
+                        operator()(i,j).data = (long)(energy.at<uchar>(i,j)*energy.at<uchar>(i,j)) + operator()(i+MID+t,j-1).data;
+                        operator()(i,j).path = MID+t;
                     }
                     //cas particulier pour la ligne inf
-                    if(i==this->height()-1){
-                        t = which_min(this->operator()(i+UP,j-1).data, this->operator()(i+MID,j-1).data);
-                        this->operator()(i,j).data = (long)energy.at<uchar>(i,j) + this->operator()(i+UP+t,j-1).data;
-                        this->operator()(i,j).path = UP+t;
+                    if(i==height()-1){
+                        t = which_min(operator()(i+UP,j-1).data, operator()(i+MID,j-1).data);
+                        operator()(i,j).data = (long)energy.at<uchar>(i,j) + operator()(i+UP+t,j-1).data;
+                        operator()(i,j).path = UP+t;
                     }
                     //cas general
-                    if(i>0 && i<this->height()-1){
-                        t = which_min(this->operator()(i+UP,j-1).data, this->operator()(i+MID,j-1).data, this->operator()(i+DWN,j-1).data);
-                        this->operator()(i,j).data = (long)energy.at<uchar>(i,j) + this->operator()(i+UP+t,j-1).data;
-                        this->operator()(i,j).path = UP+t;
+                    if(i>0 && i<height()-1){
+                        t = which_min(operator()(i+UP,j-1).data, operator()(i+MID,j-1).data, operator()(i+DWN,j-1).data);
+                        operator()(i,j).data = (long)energy.at<uchar>(i,j) + operator()(i+UP+t,j-1).data;
+                        operator()(i,j).path = UP+t;
                     }
                 }
             }
@@ -96,7 +92,8 @@ public:
         
         return p;
     }
-
+    
+    
 };
 
 //functions returns which is min (not min value, but which is min)
@@ -127,27 +124,31 @@ int which_min(long x, long y, long z){
 //Dynamic Programming method for seam carving
 
 void dsc(const Mat& I){ //Matrice I en N&B (uchar)
-    Table table(I.rows, I.cols); // structure de données pour determiner les chemins
+//    Table table; // structure de données pour determiner les chemins
     Mat energy = get_energy(I); // "carte" d'energie
+    Mat reslt = I.clone();
     
-    table.generate(energy);
+    imshow("original", I); waitKey();
     
-        
-    Mat reslt;
-    cvtColor(I, reslt, COLOR_GRAY2RGB); //matrice pour tacer un chemin (test)
+    for(int i=1; i<=100; i++){
+        Table table(reslt.rows, reslt.cols);
+        table.generate(energy);
+        Path p = table.get_min_path();
+        e_carve_y(reslt, p, 0);
+        e_carve_y(energy, p, 0);
+        imshow("images", reslt);
+        waitKey();
+    }
     
-   
-    //determination du chemin minimisant sum(energie)
-    //calcul sur la derniere colone
+    //    cvtColor(I, reslt, COLOR_GRAY2RGB); //matrice pour tacer un chemin (test)
     
     //passage sur le chemin
-//    for(int j=table.width()-1; j>=0; j--){
-//        reslt.at<Vec3b>(i_min,j) = Vec3b(0,0,255);
-//        i_min += table(i_min,j).path;
-//    }
+    //    for(int j=table.width()-1; j>=0; j--){
+    //        reslt.at<Vec3b>(i_min,j) = Vec3b(0,0,255);
+    //        i_min += table(i_min,j).path;
+    //    }
     
     
-    imshow("images", reslt);
-    waitKey();
+    
     
 }

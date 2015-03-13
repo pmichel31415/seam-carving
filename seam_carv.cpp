@@ -23,9 +23,9 @@ void carve_x(Mat& src, Path seam, int nb_tries){
 	for (int r = 0; r < src.rows; ++r){
 
 		for (int c = 0; c < src.cols - 1; ++c){
-			if (c>seam.path[r].x){
+			if (c>=seam.path[r].x){
 				src_c = c + 1;
-			}
+		    	}
 			else{
 				src_c = c;
 			}
@@ -49,7 +49,7 @@ void e_carve_x(Mat& src, Path seam, int nb_tries){
 	for (int r = 0; r < src.rows; ++r){
 
 		for (int c = 0; c < src.cols - 1; ++c){
-			if (c>seam.path[r].x){
+			if (c>=seam.path[r].x){
 				src_c = c + 1;
 			}
 			else{
@@ -75,7 +75,7 @@ void carve_y(Mat& src, Path seam, int nb_tries){
 	for (int c = 0; c < src.cols; ++c){
 
 		for (int r = 0; r < src.rows - 1; ++r){
-			if (r>seam.path[c].y){
+			if (r>=seam.path[c].y){
 				src_r = r + 1;
 			}
 			else{
@@ -100,7 +100,7 @@ void e_carve_y(Mat& src, Path seam, int nb_tries){
 	for (int c = 0; c < src.cols; ++c){
 
 		for (int r = 0; r < src.rows - 1; ++r){
-			if (r>seam.path[c].y){
+			if (r>=seam.path[c].y){
 				src_r = r + 1;
 			}
 			else{
