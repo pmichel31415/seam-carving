@@ -21,7 +21,7 @@ int main()
 //	init_gui();
 	cout << "test" << endl;
     //initialisation commune
-	Mat A = imread("Broadway_tower_edit.jpg");
+	Mat A = imread("test2.jpg");
 	namedWindow("images");
 //	imshow("images", A);	waitKey();
 	Mat I;
@@ -33,7 +33,7 @@ int main()
     //lancement pour seam_carv_random:
 	imshow("images", show_all_path(I));   waitKey();
 	imshow("images", A);	waitKey();
- 	resize_seam_carv_random(A, 1, 0.9, 100);
+ 	resize_seam_carv_random(A, 0.8, 1, 50);
 
 	imshow("carved image", A);	waitKey();
     
