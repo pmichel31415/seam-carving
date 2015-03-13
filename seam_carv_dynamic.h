@@ -1,6 +1,6 @@
 
-#ifndef seam_carv_Header_h
-#define seam_carv_Header_h
+#ifndef seam_carv_dynamic_Header_h
+#define seam_carv_dynamic_Header_h
 
 #include <iostream>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -44,7 +44,6 @@ public:
     }
 };
 
-Mat toGrad(const Mat& I);
 int which_min(long x, long y);
 int which_min(long x, long y, long z);
 void dsc(const Mat& I);

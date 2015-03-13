@@ -1,4 +1,5 @@
- #include "seam_carv.h"
+# include "seam_carv.h"
+# include "seam_carv_dynamic.h"
 
 Mat toGrad(const Mat& I){ //Matrice I en N&B (uchar)
     Mat grad_x, grad_y, grad;
