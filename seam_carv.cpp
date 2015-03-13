@@ -15,8 +15,7 @@ Mat get_energy(const Mat& I){ //Matrice I en N&B (uchar)
     return grad;
 }
 
-Mat carve_x(const Mat& src, Path seam, int nb_tries){
-	Mat ret(src.rows, src.cols - 1, src.type(), Scalar(0, 0, 0));
+void carve_x(Mat& src, Path seam, int nb_tries){
 
 
 	int src_c;
@@ -30,18 +29,18 @@ Mat carve_x(const Mat& src, Path seam, int nb_tries){
 				src_c = c;
 			}
 
-			ret.at<Vec3b>(r, c) = src.at<Vec3b>(r, src_c);
+			src.at<Vec3b>(r, c) = src.at<Vec3b>(r, src_c);
 
 
 		}
 	}
 
-	return ret;
+	Rect ROI(0, 0, src.rows, src.cols - 1);
+	src = src(ROI);
 
 }
 
-Mat e_carve_x(const Mat& src, Path seam, int nb_tries){
-	Mat ret(src.rows, src.cols - 1, src.type(), Scalar(0, 0, 0));
+void e_carve_x(Mat& src, Path seam, int nb_tries){
 
 
 	int src_c;
@@ -55,18 +54,18 @@ Mat e_carve_x(const Mat& src, Path seam, int nb_tries){
 				src_c = c;
 			}
 
-			ret.at<uchar>(r, c) = src.at<uchar>(r, src_c);
+			src.at<uchar>(r, c) = src.at<uchar>(r, src_c);
 
 
 		}
 	}
 
-	return ret;
+	Rect ROI(0, 0, src.rows, src.cols - 1);
+	src = src(ROI);
 
 }
 
-Mat carve_y(const Mat& src, Path seam, int nb_tries){
-	Mat ret(src.rows - 1, src.cols, src.type());
+Mat carve_y(Mat& src, Path seam, int nb_tries){
 
 
 	int src_r;
@@ -80,17 +79,17 @@ Mat carve_y(const Mat& src, Path seam, int nb_tries){
 				src_r = r;
 			}
 
-			ret.at<Vec3b>(r, c) = src.at<Vec3b>(src_r, c);
+			src.at<Vec3b>(r, c) = src.at<Vec3b>(src_r, c);
 
 		}
 	}
 
-	return ret;
+	Rect ROI(0, 0, src.rows - 1, src.cols);
+	src = src(ROI);
 
 }
 
-Mat e_carve_y(const Mat& src, Path seam, int nb_tries){
-	Mat ret(src.rows - 1, src.cols, src.type());
+void e_carve_y(Mat& src, Path seam, int nb_tries){
 
 
 	int src_r;
@@ -104,11 +103,12 @@ Mat e_carve_y(const Mat& src, Path seam, int nb_tries){
 				src_r = r;
 			}
 
-			ret.at<uchar>(r, c) = src.at<uchar>(src_r, c);
+			src.at<uchar>(r, c) = src.at<uchar>(src_r, c);
 
 		}
 	}
 
-	return ret;
+	Rect ROI(0, 0, src.rows - 1, src.cols);
+	src = src(ROI);
 
 }

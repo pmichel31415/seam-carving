@@ -188,37 +188,31 @@ Mat show_all_path(const Mat& src){
 
 
 
-void carve(const Mat& src, Mat& dst, int nb_tries){
-	int delta_r = src.rows - dst.rows;
-	int delta_c = src.cols - dst.cols;
+void carve(Mat& src, int d_rows, int d_cols, int nb_tries){
+	int delta_r = src.rows - d_rows;
+	int delta_c = src.cols - d_cols;
 	Path seam;
-	Mat buff = src;
 	Mat energy = get_energy(src);
 	
 	if (delta_r > 0 || delta_c > 0){
 		for (int r = 0; r < delta_r; ++r){
 			seam = random_carv_y(energy, nb_tries);
-			buff = carve_y(buff, seam, nb_tries);
-			energy = e_carve_y(energy, seam, nb_tries);
+			carve_y(src, seam, nb_tries);
+			e_carve_y(energy, seam, nb_tries);
 		}
 		for (int c = 0; c < delta_c; ++c){
 			seam = random_carv_x(energy, nb_tries);
-			buff = carve_x(buff, seam, nb_tries);
-			energy = e_carve_x(energy, seam, nb_tries);
+			carve_x(src, seam, nb_tries);
+			e_carve_x(energy, seam, nb_tries);
 		}
-		dst = buff;
 		
 	}
-	else{
-		dst = src;
-	}
+	
 }
 
-Mat resize_seam_carv_random(Mat& src, double ratio_x, double ratio_y, int nb_tries){
+void resize_seam_carv_random(Mat& src, double ratio_x, double ratio_y, int nb_tries){
 	int n_rows = ratio_y*src.rows;
 	int n_cols = ratio_x*src.cols;
-	Mat ret(n_rows, n_cols, src.type(), Scalar(0, 0, 0));
 
-	carve(src, ret, nb_tries);
-	return ret;
+	carve(src, n_rows, n_cols, nb_tries);
 }
