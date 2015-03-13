@@ -7,15 +7,11 @@
 #include "gui.h"
 
 #include "seam_carv.h"
+#include "seam_carv_dynamic.h"
 #include "seam_carv_random.h"
 
 using namespace cv;
 using namespace std;
-
-
-
-
-
 
 
 int main()
@@ -32,7 +28,7 @@ int main()
 	cvtColor(A, I, CV_RGB2GRAY);
 	namedWindow("images");
 	imshow("images", I);	waitKey();
-    imshow("images",toGrad(I));   waitKey();
+    imshow("images",get_energy(I));   waitKey();
     
     //lancement pour seam_carv_random:
 	/*imshow("images", show_all_path(I));   waitKey();

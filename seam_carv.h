@@ -13,6 +13,6 @@ using namespace cv;
 using namespace std;
 
 
-Mat toGrad(const Mat& I);
+Mat get_energy(const Mat& I);
 
 #endif
