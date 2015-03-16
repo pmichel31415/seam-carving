@@ -21,7 +21,7 @@ int main()
 //	init_gui();
 	cout << "test" << endl;
     //initialisation commune
-	Mat A = imread("test2.jpg");
+	Mat A = imread("waterfall.jpg");
 	namedWindow("images");
 //	imshow("images", A);	waitKey();
 	Mat I;
@@ -34,7 +34,7 @@ int main()
 
 	imshow("images", show_all_path(I));   waitKey();
 	imshow("images", A);	waitKey();
- 	resize_seam_carv_random(A, 0.8, 1, 50);
+ 	resize_seam_carv_random(A, 0.3, 1, 50);
 
 //	imshow("images", show_all_path(I));   waitKey();
 //	imshow("images", A);	waitKey();

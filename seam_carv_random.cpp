@@ -11,11 +11,11 @@ int get_next_weighted(double x, double y, double z){
 	double w1, w2, w3;
 	if (x == -1){
 		w1 = 0;
-		w2 = 1 / (y+1);
-		w3 = 1 / (z+1);
+		w2 = 1 / (y + 1);
+		w3 = 1 / (z + 1);
 	}
 	else if (y == -1){
-		w1 = 1 / (x+1);
+		w1 = 1 / (x + 1);
 		w2 = 0;
 		w3 = 1 / (z + 1);
 	}
@@ -31,8 +31,8 @@ int get_next_weighted(double x, double y, double z){
 	}
 
 
-	
-  	double r = (double) rand() / RAND_MAX;
+
+	double r = (double)rand() / RAND_MAX;
 	double weight = w1 + w2 + w3;
 	double t1 = w1 / weight;
 	double t2 = (w1 + w2) / weight;
@@ -72,11 +72,11 @@ Path random_walk_x(const Mat& I){
 	Path ret;
 	Vector<Pixel> path(I.size().height);
 	ret.path = path;
-	
+
 	ret.path[0].x = get_random_int_in_range(0, I.size().width - 1);
 	ret.path[0].y = 0;
 
-	ret.energy = safe_get(I,ret.path[0].y, ret.path[0].x);
+	ret.energy = safe_get(I, ret.path[0].y, ret.path[0].x);
 	for (int y = 1; y < I.size().height; ++y){
 
 		ret.path[y].x = ret.path[y - 1].x + get_next_weighted(safe_get(I, y, ret.path[y - 1].x - 1), safe_get(I, y, ret.path[y - 1].x), safe_get(I, y, ret.path[y - 1].x + 1));// get_random_int_in_range(-1, 1);
@@ -125,7 +125,7 @@ Path random_walk_y(const Mat& I){
 }
 
 Path min_energy_path(const Vector<Path>& V){
-	Path ret=V[0];
+	Path ret = V[0];
 	double min = ret.energy;
 	for (int k = 1; k < V.size(); ++k){
 		if (V[k].energy < min){
@@ -137,7 +137,7 @@ Path min_energy_path(const Vector<Path>& V){
 }
 
 Path random_carv_x(const Mat& E, int nb_tries){
-	
+
 	Vector<Path> paths(nb_tries);
 	for (int k = 0; k < nb_tries; k++){
 		paths[k] = random_walk_x(E);
@@ -147,7 +147,7 @@ Path random_carv_x(const Mat& E, int nb_tries){
 }
 
 Path random_carv_y(const Mat& E, int nb_tries){
-	
+
 	Vector<Path> paths(nb_tries);
 	for (int k = 0; k < nb_tries; k++){
 		paths[k] = random_walk_y(E);
@@ -184,7 +184,6 @@ Mat show_all_path(const Mat& src){
 		//}
 		//p = min_energy_path(paths);
 		p = random_carv_x(energy, 100);
-		cout << p.energy << endl;
 		for (int k = 0; k < p.path.size(); ++k){
 			ret.at<Vec3b>(p.path[k].y, p.path[k].x) = Vec3b(0, 255, 255);
 		}
@@ -201,26 +200,45 @@ void carve(Mat& src, int d_rows, int d_cols, int nb_tries){
 	Mat I;
 	cvtColor(src, I, CV_RGB2GRAY);
 	Mat energy = get_energy(I);
-	
-	if (delta_r > 0 || delta_c > 0){
+
+	if (delta_r > 0){
 		for (int r = 0; r < delta_r; ++r){
 			seam = random_carv_y(energy, nb_tries);
 			carve_y(src, seam, nb_tries);
 			e_carve_y(energy, seam, nb_tries);
 			imshow("images", src); waitKey();
-			imshow("energy", energy); waitKey();
 		}
+	}
+	if (delta_c > 0){
+
 		for (int c = 0; c < delta_c; ++c){
 			seam = random_carv_x(energy, nb_tries);
 			carve_x(src, seam, nb_tries);
 			e_carve_x(energy, seam, nb_tries);
 			imshow("images", src); waitKey();
-			imshow("energy", energy); waitKey();
 		}
-		
 	}
-	
+	if (delta_r < 0){
+		for (int r = 0; r < delta_r; ++r){
+			seam = random_carv_y(energy, nb_tries);
+			add_y(src, seam, nb_tries);
+			e_add_y(energy, seam, nb_tries);
+			imshow("images", src); waitKey();
+		}
+	}
+	if (delta_c < 0){
+
+		for (int c = 0; c < delta_c; ++c){
+			seam = random_carv_x(energy, nb_tries);
+			add_x(src, seam, nb_tries);
+			e_add_x(energy, seam, nb_tries);
+			imshow("images", src); waitKey();
+		}
+	}
+
 }
+
+
 
 void resize_seam_carv_random(Mat& src, double ratio_x, double ratio_y, int nb_tries){
 	int n_rows = ratio_y*src.rows;

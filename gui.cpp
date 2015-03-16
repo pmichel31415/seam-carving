@@ -22,7 +22,7 @@ void on_trackbar_width(int, void*)
 
 	
 
-	resize_seam_carv_random(src, width_ratio, height_ratio,2);
+	resize_seam_carv_random(src, width_ratio, height_ratio,20);
 
 	imshow("Seam carving", src);
 }
@@ -33,7 +33,7 @@ void on_trackbar_height(int, void*)
 		height_slider = 1;
 	}
 	height_ratio = (double)(height_slider) / height_slider_max;
-	resize_seam_carv_random(src, width_ratio, height_ratio,2);
+	resize_seam_carv_random(src, width_ratio, height_ratio,20);
 
 	imshow("Seam carving", src);
 }
