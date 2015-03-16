@@ -35,7 +35,7 @@ int main()
 
 	imshow("image", show_all_path(I));   waitKey();
 	imshow("image", A);	waitKey();
- 	resize_seam_carv_random(A, 1, 1.3, 50);
+ 	resize_seam_carv_random(A, 0.8, 1.3, 50);
 
 
 
