@@ -49,16 +49,16 @@ void add_x(Mat& src, Path seam, int nb_tries){
 	Mat row = src(ROI);
 	hconcat(src, row, src);
 	for (int r = 0; r < src.rows; ++r){
-		
+
 		for (signed int c = (src.cols - 1); c >= 0; --c){
 			if (c > seam.path[r].x){
 				src.at<Vec3b>(r, c) = src.at<Vec3b>(r, c - 1);
 			}
 			else if (c == seam.path[r].x){
-				src.at<Vec3b>(r, c) = (src.at<Vec3b>(r, c - 1)/2.0 + src.at<Vec3b>(r,c)/2.0);
+				src.at<Vec3b>(r, c) = (src.at<Vec3b>(r, c - 1) / 2.0 + src.at<Vec3b>(r, c) / 2.0);
 			}
 			else{
-				src.at<Vec3b>(r,  c) = src.at<Vec3b>(r, c);
+				src.at<Vec3b>(r, c) = src.at<Vec3b>(r, c);
 			}
 		}
 	}
@@ -142,14 +142,18 @@ void add_y(Mat& src, Path seam, int nb_tries){
 	vconcat(src, col, src);
 	for (int c = 0; c < src.cols - 1; ++c){
 
-		for (signed int r = (src.rows - 1); r >=0 ; --r){
+		for (signed int r = (src.rows - 1); r >= 0; --r){
 
 			if (r > seam.path[c].y){
-				src.at<Vec3b>(r, c) = src.at<Vec3b>(r-1, c);
+				src.at<Vec3b>(r, c) = src.at<Vec3b>(r - 1, c);
 			}
 			else if (r == seam.path[c].y){
-				src.at<Vec3b>(r, c) = (src.at<Vec3b>(r - 1, c) / 2.0 + src.at<Vec3b>(r, c) / 2.0);
+				if (r != 0){
+					src.at<Vec3b>(r, c) = (src.at<Vec3b>(r - 1, c) / 2.0 + src.at<Vec3b>(r, c) / 2.0);
+				}
+
 			}
+
 		}
 	}
 }
