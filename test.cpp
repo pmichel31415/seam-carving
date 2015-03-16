@@ -19,10 +19,11 @@ int main()
 	
 
 //	init_gui();
-	cout << "test" << endl;
+ 
     //initialisation commune
-	Mat A = imread("Broadway_tower_edit.jpg");
-	namedWindow("image");
+	Mat A = imread("test3.jpg");
+	namedWindow("images");
+
 //	imshow("images", A);	waitKey();
 	Mat I;
 	cvtColor(A, I, CV_RGB2GRAY);

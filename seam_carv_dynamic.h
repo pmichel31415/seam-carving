@@ -14,12 +14,9 @@
 using namespace cv;
 using namespace std;
 
-#define UP -1
-#define MID 0
-#define DWN 1
 
-int which_min(long x, long y);
-int which_min(long x, long y, long z);
+
+
 void dsc(const Mat& I);
 
 
