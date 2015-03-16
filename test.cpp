@@ -21,21 +21,21 @@ int main()
 //	init_gui();
 	cout << "test" << endl;
     //initialisation commune
-	Mat A = imread("waterfall.jpg");
-	namedWindow("images");
+	Mat A = imread("Broadway_tower_edit.jpg");
+	namedWindow("image");
 //	imshow("images", A);	waitKey();
 	Mat I;
 	cvtColor(A, I, CV_RGB2GRAY);
-	namedWindow("images");
-	imshow("images", I);	waitKey();
-    imshow("images",get_energy(I));   waitKey();
+	namedWindow("image");
+	imshow("image", I);	waitKey();
+    imshow("image",get_energy(I));   waitKey();
     
     //lancement pour seam_carv_random:
 
 
-	imshow("images", show_all_path(I));   waitKey();
-	imshow("images", A);	waitKey();
- 	resize_seam_carv_random(A, 0.3, 1, 50);
+	imshow("image", show_all_path(I));   waitKey();
+	imshow("image", A);	waitKey();
+ 	resize_seam_carv_random(A, 1, 1.3, 50);
 
 
 
@@ -45,7 +45,7 @@ int main()
 //	resize_seam_carv_random(A, 1, 0.9, 100);
 //
 //	imshow("carved image", A);	waitKey();
-
+	 
 //	imshow("images", show_all_path(I));   waitKey();
 //	imshow("images", A);	waitKey();
 //	Mat resize_A;

@@ -26,8 +26,12 @@ struct Path{
 Mat get_energy(const Mat& I);
 
 void carve_x(Mat& src, Path seam, int nb_tries);
+void add_x(Mat& src, Path seam, int nb_tries);
 void e_carve_x(Mat& src, Path seam, int nb_tries);
+void e_add_x(Mat& src, Path seam, int nb_tries);
 void carve_y(Mat& src, Path seam, int nb_tries);
+void add_y(Mat& src, Path seam, int nb_tries);
 void e_carve_y(Mat& src, Path seam, int nb_tries);
+void e_add_y(Mat& src, Path seam, int nb_tries);
 
 #endif

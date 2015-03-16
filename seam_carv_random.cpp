@@ -219,20 +219,22 @@ void carve(Mat& src, int d_rows, int d_cols, int nb_tries){
 		}
 	}
 	if (delta_r < 0){
-		for (int r = 0; r < delta_r; ++r){
+		for (int r = 0; r > delta_r; --r){
 			seam = random_carv_y(energy, nb_tries);
 			add_y(src, seam, nb_tries);
 			e_add_y(energy, seam, nb_tries);
-			imshow("images", src); waitKey();
+			imshow("image", src); waitKey();
+			imshow("energie", energy); waitKey();
 		}
 	}
 	if (delta_c < 0){
 
-		for (int c = 0; c < delta_c; ++c){
+		for (int c = 0; c > delta_c; --c){
 			seam = random_carv_x(energy, nb_tries);
 			add_x(src, seam, nb_tries);
 			e_add_x(energy, seam, nb_tries);
-			imshow("images", src); waitKey();
+			imshow("image", src); waitKey();
+			imshow("energie", energy); waitKey();
 		}
 	}
 
