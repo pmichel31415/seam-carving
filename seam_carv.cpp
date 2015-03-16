@@ -98,28 +98,46 @@ void carve_y(Mat& src, Path seam, int nb_tries){
 }
 
 void e_carve_y(Mat& src, Path seam, int nb_tries){
-
-
-	int src_r;
-	for (int c = 0; c < src.cols; ++c){
-
-		for (int r = 0; r < src.rows - 1; ++r){
-
-			if (r >= seam.path[c].y){
-
-				src_r = r + 1;
-			}
-			else{
-				src_r = r;
-			}
-
-			src.at<uchar>(r, c) = src.at<uchar>(src_r, c);
-
-		}
-	}
-
-	Rect ROI(0, 0, src.cols, src.rows - 1);
-	Mat dst = src(ROI);
-	src = dst;
-
+    
+    
+    int src_r;
+    for (int c = 0; c < src.cols; ++c){
+        
+        for (int r = 0; r < src.rows - 1; ++r){
+            if (r>=seam.path[c].y){
+                src_r = r + 1;
+            }
+            else{
+                src_r = r;
+            }
+            
+            src.at<uchar>(r, c) = src.at<uchar>(src_r, c);
+            
+        }
+    }
+    
+    Rect ROI(0, 0, src.cols, src.rows - 1);
+    Mat dst = src(ROI);
+    src = dst;
+    
 }
+
+
+//void e_carve_y(Mat& src, Path seam, int e){
+//    int src_r;
+//	for (int c = 0; c < src.cols; ++c){
+//        for (int r = 0; r < src.rows - 1; ++r){
+//
+//            if(r< seam.path[c].y - e) src_r = r;
+//			if(r > seam.path[c].y + e) src_r = r + 1+2*e;
+//
+//			src.at<uchar>(r, c) = src.at<uchar>(src_r, c);
+//
+//		}
+//	}
+//
+//	Rect ROI(0, 0, src.cols, src.rows - 1);
+//	Mat dst = src(ROI);
+//	src = dst;
+//}
+

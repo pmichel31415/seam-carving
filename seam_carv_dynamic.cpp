@@ -93,7 +93,6 @@ public:
         return p;
     }
     
-    
 };
 
 //functions returns which is min (not min value, but which is min)
@@ -124,21 +123,22 @@ int which_min(long x, long y, long z){
 //Dynamic Programming method for seam carving
 
 void dsc(const Mat& I){ //Matrice I en N&B (uchar)
-//    Table table; // structure de données pour determiner les chemins
+    //    Table table; // structure de données pour determiner les chemins
     Mat energy = get_energy(I); // "carte" d'energie
     Mat reslt = I.clone();
     
     imshow("original", I); waitKey();
     
-    for(int i=1; i<=600; i++){
+    for(int i=1; i<=100; i++){
         Table table(reslt.rows, reslt.cols);
         table.generate(energy);
         Path p = table.get_min_path();
         e_carve_y(reslt, p, 0);
         e_carve_y(energy, p, 0);
-        imshow("images", reslt);
-        waitKey();
     }
+    imshow("images", reslt);
+    waitKey();
+    
     
     //    cvtColor(I, reslt, COLOR_GRAY2RGB); //matrice pour tacer un chemin (test)
     
