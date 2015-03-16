@@ -56,13 +56,13 @@ public:
                     //cas particulier pour la ligne inf
                     if(i==height()-1){
                         t = which_min(operator()(i+UP,j-1).data, operator()(i+MID,j-1).data);
-                        operator()(i,j).data = (long)energy.at<uchar>(i,j) + operator()(i+UP+t,j-1).data;
+                        operator()(i,j).data = (long)(energy.at<uchar>(i,j)*energy.at<uchar>(i,j)) + operator()(i+UP+t,j-1).data;
                         operator()(i,j).path = UP+t;
                     }
                     //cas general
                     if(i>0 && i<height()-1){
                         t = which_min(operator()(i+UP,j-1).data, operator()(i+MID,j-1).data, operator()(i+DWN,j-1).data);
-                        operator()(i,j).data = (long)energy.at<uchar>(i,j) + operator()(i+UP+t,j-1).data;
+                        operator()(i,j).data = (long)(energy.at<uchar>(i,j)*energy.at<uchar>(i,j)) + operator()(i+UP+t,j-1).data;
                         operator()(i,j).path = UP+t;
                     }
                 }
@@ -92,7 +92,6 @@ public:
         
         return p;
     }
-    
     
 };
 
@@ -124,7 +123,7 @@ int which_min(long x, long y, long z){
 //Dynamic Programming method for seam carving
 
 void dsc(const Mat& I){ //Matrice I en N&B (uchar)
-//    Table table; // structure de données pour determiner les chemins
+    //    Table table; // structure de données pour determiner les chemins
     Mat energy = get_energy(I); // "carte" d'energie
     Mat reslt = I.clone();
     
@@ -136,9 +135,10 @@ void dsc(const Mat& I){ //Matrice I en N&B (uchar)
         Path p = table.get_min_path();
         e_carve_y(reslt, p, 0);
         e_carve_y(energy, p, 0);
-        imshow("images", reslt);
-        waitKey();
     }
+    imshow("images", reslt);
+    waitKey();
+    
     
     //    cvtColor(I, reslt, COLOR_GRAY2RGB); //matrice pour tacer un chemin (test)
     
