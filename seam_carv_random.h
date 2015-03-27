@@ -40,6 +40,6 @@ Mat show_all_path(const Mat& src);
 
 void carve(Mat& src, int d_rows, int d_cols, int nb_tries);
 
-	void resize_seam_carv_random(Mat& src, double ratio_x, double ratio_y, int nb_tries);
+void resize_seam_carv_random(Mat& src, Size wanted, int nb_tries);
 
 #endif

@@ -19,6 +19,7 @@ int main (int argc, char *argv[]){
 //    argv[2] -> dim image de sortie
 //    argv[3] -> path de sortie
 //    argv[4] -> methode
+//    argv[5] -> nb_tries si methode = 3
   
     Mat Img = imread(argv[1]);
     Size original(Img.cols, Img.rows);
@@ -31,6 +32,8 @@ int main (int argc, char *argv[]){
     Size scaled;
     resize(Img, I, scaled = scale(Img, wanted));
     
+    clock_t start = clock();
+    
     switch(method) {
         case 1:{
             imwrite((string)argv[3], dsc(I, wanted));
@@ -39,11 +42,17 @@ int main (int argc, char *argv[]){
         case 2:{
             break;
         }
+        case 3:{
+            resize_seam_carv_random(I, wanted, stoi((string)argv[5]));
+            imwrite((string)argv[3], I);
+            break;
+        }
             
         default:{
             cout << "Error : not a correct method" << endl;
             break;
         }
     }
+    cout << "Duration : " << (clock() - start) << endl;
     
 }

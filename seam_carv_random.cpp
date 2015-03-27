@@ -242,9 +242,9 @@ void carve(Mat& src, int d_rows, int d_cols, int nb_tries){
 
 
 
-void resize_seam_carv_random(Mat& src, double ratio_x, double ratio_y, int nb_tries){
-	int n_rows = ratio_y*src.rows;
-	int n_cols = ratio_x*src.cols;
+void resize_seam_carv_random(Mat& src, Size wanted, int nb_tries){
+    int n_rows = wanted.height;
+    int n_cols = wanted.width;
 
 	carve(src, n_rows, n_cols, nb_tries);
 }
