@@ -297,9 +297,9 @@ public:
 
 
 
-//Dynamic Programming method for seam carving
+//Dynamic Programming methods for seam carving
 
-Mat dsc(const Mat& I, Size wanted){ //Matrice I en RGB
+Mat back_dsc(const Mat& I, Size wanted){ //Matrice I en RGB
     Mat energy;
     cvtColor(I, energy, CV_RGB2GRAY);
     energy = get_energy(energy); // "carte" d'energie
@@ -324,5 +324,29 @@ Mat dsc(const Mat& I, Size wanted){ //Matrice I en RGB
             e_carve_x(energy, p, 0);
         }
     }
+    
+    if((diff = wanted.height - I.rows) > 0){
+        for(int i=1; i<=diff; i++){
+            Table table(reslt.rows, reslt.cols);
+            Path p = table.search_path_h(energy);
+            add_y(reslt, p, 0);
+            e_add_y(energy, p, 0);
+        }
+    }
+    
+    if((diff = wanted.width - I.cols) > 0){
+        for(int i=1; i<=diff; i++){
+            Table table(reslt.rows, reslt.cols);
+            Path p = table.search_path_v(energy);
+            add_x(reslt, p, 0);
+            e_add_x(energy, p, 0);
+        }
+    }
+    
     return reslt;
 }
+
+Mat forw_dsc(const Mat& I, Size wanted){
+    return I;
+}
+    

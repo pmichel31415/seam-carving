@@ -14,14 +14,7 @@
 using namespace cv;
 using namespace std;
 
-
-
-
-Mat dsc(const Mat& I, Size wanted);
-
-
-
-
-
+Mat back_dsc(const Mat& I, Size wanted);
+Mat forw_dsc(const Mat& I, Size wanted);
 
 #endif

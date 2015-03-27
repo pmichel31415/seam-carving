@@ -36,10 +36,11 @@ int main (int argc, char *argv[]){
     
     switch(method) {
         case 1:{
-            imwrite((string)argv[3], dsc(I, wanted));
+            imwrite((string)argv[3], back_dsc(I, wanted));
             break;
         }
         case 2:{
+            imwrite((string)argv[3], forw_dsc(I, wanted));
             break;
         }
         case 3:{
@@ -53,6 +54,7 @@ int main (int argc, char *argv[]){
             break;
         }
     }
+    
     cout << "Duration : " << (clock() - start) << endl;
     
 }

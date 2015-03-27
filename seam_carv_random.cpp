@@ -206,7 +206,6 @@ void carve(Mat& src, int d_rows, int d_cols, int nb_tries){
 			seam = random_carv_y(energy, nb_tries);
 			carve_y(src, seam, nb_tries);
 			e_carve_y(energy, seam, nb_tries);
-			imshow("image", src); waitKey();
 		}
 	}
 	if (delta_c > 0){
@@ -215,7 +214,6 @@ void carve(Mat& src, int d_rows, int d_cols, int nb_tries){
 			seam = random_carv_x(energy, nb_tries);
 			carve_x(src, seam, nb_tries);
 			e_carve_x(energy, seam, nb_tries);
-			imshow("image", src); waitKey();
 		}
 	}
 	if (delta_r < 0){
@@ -223,9 +221,7 @@ void carve(Mat& src, int d_rows, int d_cols, int nb_tries){
 			seam = random_carv_y(energy, nb_tries);
 			add_y(src, seam, nb_tries);
 			e_add_y(energy, seam, nb_tries);
-			imshow("image", src); waitKey();
-			imshow("energie", energy); waitKey();
-		}
+        }
 	}
 	if (delta_c < 0){
 
@@ -233,8 +229,6 @@ void carve(Mat& src, int d_rows, int d_cols, int nb_tries){
 			seam = random_carv_x(energy, nb_tries);
 			add_x(src, seam, nb_tries);
 			e_add_x(energy, seam, nb_tries);
-			imshow("image", src); waitKey();
-			imshow("energie", energy); waitKey();
 		}
 	}
 
