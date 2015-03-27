@@ -143,10 +143,10 @@ void e_add_x(Mat& src, Path seam, int nb_tries){
 
 		for (signed int c = (src.cols - 1); c >= 0; --c){
 
-			if (c > seam.path[r].x){
+			if (c > seam.path[r].x+1){
 				src.at<uchar>(r, c) = src.at<uchar>(r, c - 1);
 			}
-			else if (c == seam.path[r].x){
+			else if (c == seam.path[r].x || c == seam.path[r].x+1){
 				src.at<uchar>(r, c) = uchar(255);
 			}
 		}
@@ -234,10 +234,10 @@ void e_add_y(Mat& src, Path seam, int nb_tries){
 
 		for (signed int r = (src.rows - 1); r >= 0; --r){
 
-			if (r > seam.path[c].y){
+			if (r > seam.path[c].y +1){
 				src.at<uchar>(r, c) = src.at<uchar>(r - 1, c);
 			}
-			else if (r == seam.path[c].y){
+			else if (r == seam.path[c].y || r == seam.path[c].y+1){
 				src.at<uchar>(r, c) = uchar(255);
 			}
 		}
