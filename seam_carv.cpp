@@ -1,5 +1,47 @@
 #include "seam_carv.h"
 
+Size scale(const Mat & A, Size size){
+    int size_x = A.cols;
+    int size_y = A.rows;
+    int wanted_size_x = size.width;
+    int wanted_size_y = size.height;
+    
+    if(size_x >= wanted_size_x && size_y >= wanted_size_y){
+        if( (double)size_x/(double)wanted_size_x >= (double)size_y/(double)wanted_size_y ){
+            size_x = (int)floor((double)(size_x*wanted_size_y)/(double)size_y);
+            size_y = wanted_size_y;
+        }
+        else{
+            size_y = (int)floor((double)(size_y*wanted_size_x)/(double)size_x);
+            size_x = wanted_size_x;
+        }
+    }
+    
+    if(size_x <= wanted_size_x && size_y <= wanted_size_y){
+        if( (double)size_x/(double)wanted_size_x <= (double)size_y/(double)wanted_size_y ){
+            size_x = (int)floor((double)(size_x*wanted_size_y)/(double)size_y);
+            size_y = wanted_size_y;
+        }
+        else{
+            size_y = (int)floor((double)(size_y*wanted_size_x)/(double)size_x);
+            size_x = wanted_size_x;
+        }
+    }
+    
+    if(!(size_x >= wanted_size_x && size_y >= wanted_size_y) && !(size_x <= wanted_size_x && size_y <= wanted_size_y)){
+        if( (double)size_x/(double)wanted_size_x <= 1){
+            size_y = (int)floor((double)(size_y*wanted_size_x)/(double)size_x);
+            size_x = wanted_size_x;
+        }
+        else{
+            size_x = (int)floor((double)(size_x*wanted_size_y)/(double)size_y);
+            size_y = wanted_size_y;
+        }
+    }
+    return Size(size_x, size_y);
+
+}
+
 Mat get_energy(const Mat& I){ //Matrice I en N&B (uchar)
 	Mat grad_x, grad_y, grad;
 
@@ -202,6 +244,8 @@ void e_add_y(Mat& src, Path seam, int nb_tries){
 	}
 }
 
+
+//========== tentative pour epaissir le chemin ==========
 
 //void e_carve_y(Mat& src, Path seam, int e){
 //    int src_r;

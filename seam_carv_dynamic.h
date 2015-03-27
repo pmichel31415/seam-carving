@@ -17,7 +17,7 @@ using namespace std;
 
 
 
-void dsc(const Mat& I);
+Mat dsc(const Mat& I, Size wanted);
 
 
 

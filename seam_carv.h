@@ -25,6 +25,7 @@ struct Path{
 
 Mat get_energy(const Mat& I);
 
+Size scale(const Mat & A, Size hopped_size);
 void carve_x(Mat& src, Path seam, int nb_tries);
 void add_x(Mat& src, Path seam, int nb_tries);
 void e_carve_x(Mat& src, Path seam, int nb_tries);

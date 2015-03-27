@@ -6,6 +6,6 @@ FIND_PACKAGE(OpenCV REQUIRED)
 
 PROJECT(seam-carving)
 
-ADD_EXECUTABLE(seam-carving test.cpp seam_carv.cpp seam_carv_dynamic.cpp seam_carv_random.cpp gui.cpp seam_carv.h seam_carv_dynamic.h gui.h seam_carv_random.h)
+ADD_EXECUTABLE(seam-carving test.cpp main.cpp seam_carv.cpp seam_carv_dynamic.cpp seam_carv_random.cpp gui.cpp seam_carv.h seam_carv_dynamic.h gui.h seam_carv_random.h)
 
 TARGET_LINK_LIBRARIES(seam-carving ${OpenCV_LIBS})

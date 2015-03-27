@@ -283,7 +283,7 @@ public:
     }
     
     Path search_path_v(const Mat& energy){ //Mat I en uchar
-        forw_generate_v(energy);
+        back_generate_v(energy);
         return get_min_path_v();
     }
     
@@ -299,24 +299,30 @@ public:
 
 //Dynamic Programming method for seam carving
 
-void dsc(const Mat& I){ //Matrice I en N&B (uchar)
-    Mat energy = get_energy(I); // "carte" d'energie
+Mat dsc(const Mat& I, Size wanted){ //Matrice I en RGB
+    Mat energy;
+    cvtColor(I, energy, CV_RGB2GRAY);
+    energy = get_energy(energy); // "carte" d'energie
     Mat reslt = I.clone();
     
-    imshow("original", I); waitKey();
+    int diff;
     
-    for(int i=1; i<=600; i++){
-        Table table(reslt.rows, reslt.cols);
-        Path p = table.search_path_v(energy);
-        
-        e_carve_x(reslt, p, 0);
-        e_carve_x(energy, p, 0);
-        
-        imshow("images", reslt);
-        waitKey();
+    if((diff = I.rows - wanted.height) > 0){
+        for(int i=1; i<=diff; i++){
+            Table table(reslt.rows, reslt.cols);
+            Path p = table.search_path_h(energy);
+            carve_y(reslt, p, 0);
+            e_carve_y(energy, p, 0);
+        }
     }
     
-    
-    
-    
+    if((diff = I.cols - wanted.width) > 0){
+        for(int i=1; i<=diff; i++){
+            Table table(reslt.rows, reslt.cols);
+            Path p = table.search_path_v(energy);
+            carve_x(reslt, p, 0);
+            e_carve_x(energy, p, 0);
+        }
+    }
+    return reslt;
 }
