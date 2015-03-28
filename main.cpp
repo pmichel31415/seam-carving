@@ -24,9 +24,9 @@ int main (int argc, char *argv[]){
     Mat Img = imread(argv[1]);
     Size original(Img.cols, Img.rows);
     
-    int method = stoi((string)argv[4]) ;
+    int method = atoi(argv[4]) ;
    
-    Size wanted(stoi( ((string)argv[2]).substr(0, ((string)argv[2]).find("x")) ), stoi( ((string)argv[2]).substr(((string)argv[2]).find("x") +1, ((string)argv[2]).length())));
+    Size wanted(atoi( ((string)argv[2]).substr(0, ((string)argv[2]).find("x")).c_str() ), atoi( ((string)argv[2]).substr(((string)argv[2]).find("x") +1, ((string)argv[2]).length()).c_str()));
     
     Mat I;
     Size scaled;
@@ -44,7 +44,7 @@ int main (int argc, char *argv[]){
             break;
         }
         case 3:{
-            resize_seam_carv_random(I, wanted, stoi((string)argv[5]));
+            resize_seam_carv_random(I, wanted, atoi(argv[5]));
             imwrite((string)argv[3], I);
             break;
         }
