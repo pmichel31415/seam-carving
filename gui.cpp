@@ -41,31 +41,31 @@ void on_trackbar_height(int, void*)
 }
 
 void init_gui(){
-	src = imread("Broadway_tower_edit.jpg");
-	//dst = imread("Broadway_tower_edit.jpg");
-	/// Create Windows
-	namedWindow("Seam carving", 1);
+	//src = imread("Broadway_tower_edit.jpg");
+	////dst = imread("Broadway_tower_edit.jpg");
+	///// Create Windows
+	//namedWindow("Seam carving", 1);
 
-	width_slider = 100;
-	height_slider = 100;
-	width_ratio = 1;
-	height_ratio = 1;
+	//width_slider = 100;
+	//height_slider = 100;
+	//width_ratio = 1;
+	//height_ratio = 1;
 
 
 
-	/// Create Trackbars
-	char WidthTrackbarName[50];
-	sprintf(WidthTrackbarName, "Width : %d", width_slider_max);
+	///// Create Trackbars
+	//char WidthTrackbarName[50];
+	//sprintf(WidthTrackbarName, "Width : %d", width_slider_max);
 
-	char HeightTrackbarName[50];
-	sprintf(HeightTrackbarName, "Height : %d", height_slider_max);
+	//char HeightTrackbarName[50];
+	//sprintf(HeightTrackbarName, "Height : %d", height_slider_max);
 
-	createTrackbar(WidthTrackbarName, "Seam carving", &width_slider, width_slider_max, on_trackbar_width);
-	createTrackbar(HeightTrackbarName, "Seam carving", &height_slider, height_slider_max, on_trackbar_height);
+	//createTrackbar(WidthTrackbarName, "Seam carving", &width_slider, width_slider_max, on_trackbar_width);
+	//createTrackbar(HeightTrackbarName, "Seam carving", &height_slider, height_slider_max, on_trackbar_height);
 
-	/// Show some stuff
-	on_trackbar_width(width_slider, 0);
-	on_trackbar_height(height_slider, 0);
+	///// Show some stuff
+	//on_trackbar_width(width_slider, 0);
+	//on_trackbar_height(height_slider, 0);
 
-	waitKey(0);
+	//waitKey(0);
 }
