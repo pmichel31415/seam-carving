@@ -32,7 +32,7 @@ int main (int argc, char *argv[]){
     Size scaled;
     resize(Img, I, scaled = scale(Img, wanted));
     
-    time_t start = time();
+    time_t start = time(NULL);
     
     switch(method) {
         case 1:{
@@ -55,6 +55,6 @@ int main (int argc, char *argv[]){
         }
     }
     
-    cout << "Duration : " << (time() - start) << endl;
+	cout << "Duration : " << (time(NULL) - start) << endl;
     
 }
