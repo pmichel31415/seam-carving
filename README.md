@@ -5,6 +5,7 @@ Seam-carving was originally a project for a course at [École polytechnique](htt
 It is a CLI program implementing various algorithms around the idea of seam-carving, a very interesting method for 1-dimension image resizing (see [this video](https://www.youtube.com/watch?v=6NcIJXTlugc) for instance).
 
 If you want to test the program please visit [SCTest](sctest.mandrathax.fr).
+You can watch a demo with GUI [here](https://youtu.be/Xq5XoIOiYEY) (NOT implemented in the latest commit)
 
 ##Install
 
